@@ -14,6 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Debug secrets
+        run: |
+          echo "Largo de SUPABASE_URL: ${#SUPABASE_URL}"
+          echo "SUPABASE_URL empieza con: ${SUPABASE_URL:0:20}"
+          echo "Largo de SUPABASE_ANON_KEY: ${#SUPABASE_ANON_KEY}"
+          echo "SUPABASE_ANON_KEY empieza con: ${SUPABASE_ANON_KEY:0:15}"
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
       - name: Ping Supabase
         run: |
           curl -sS -o /dev/null -w "Supabase respondió con código: %{http_code}\n" \
